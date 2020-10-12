@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <!-- 实体类，表，动态插入，动态更新 -->
+    <class name="per.xgt.pojo.Person" table="PERSON" dynamic-insert="true" dynamic-update="true">
+
+        <!--
+         name：表对应类的全类名
+         table： 类对应的表名
+            id标签：表的主键
+                name：映射类的属性名
+                type：属性类型全类名
+                column：对应表的字段名
+                generator：主键生成策略
+            property：非主键的其他字段映射
+                name：映射类的属性名
+                type：属性类型全类名
+                column：对应表的字段名
+
+         -->
+        <id name="personId" type="java.lang.Integer">
+            <column name="PersonId" />
+            <!-- 指定主键的生成方式：
+                native:数据库底层生成方式
+            -->
+            <generator class="native" />
+        </id>
+        <property name="personName" type="java.lang.String">
+            <column name="PersonName" />
+        </property>
+        <property name="personAge" type="java.lang.Integer">
+            <column name="PersonAge" />
+        </property>
+
+    </class>
+
+</hibernate-mapping>

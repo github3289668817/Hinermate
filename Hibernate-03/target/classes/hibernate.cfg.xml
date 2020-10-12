@@ -1,0 +1,70 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-configuration PUBLIC
+        "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+
+<hibernate-configuration>
+
+    <session-factory>
+
+        <!-- 配置连接数据库的基本信息 -->
+        <property name="connection.username">root</property>
+        <property name="connection.password">root</property>
+        <property name="connection.driver_class">oracle.jdbc.driver.OracleDriver</property>
+        <property name="connection.url">jdbc:oracle:thin:@localhost:1521:orcl</property>
+
+        <!-- 配置C3P0数据源 -->
+        <!--<property name="c3p0.max_size">10</property>
+        <property name="c3p0.min_size">5</property>
+        <property name="c3p0.acquire_increment">2</property>
+        <property name="c3p0.idle_test_period">2000</property>
+        <property name="c3p0.timeout">2000</property>
+        <property name="c3p0.max_statements">1</property>-->
+
+        <!-- 配置Hibernate的基本信息 -->
+        <!-- 1.hibernate所使用的数据库方言-》哪种数据库 -->
+        <property name="dialect">org.hibernate.dialect.Oracle10gDialect</property>
+
+        <!-- 2.执行操作时是否再控制台打印SQL -->
+        <property name="show_sql">true</property>
+
+        <!-- 3.是否对SQL进行格式化 -->
+        <property name="format_sql">true</property>
+
+        <!-- 4.指定自动生成数据表的策略 -->
+        <property name="hibernate.hbm2ddl.auto">update</property>
+        
+        <!-- 5.设置Hibernate的事务隔离级别 -->
+        <property name="connection.isolation">2</property>
+
+        <!-- 删除对象后，把OID置为NULL -->
+        <property name="use_identifier_rollback">true</property>
+
+        <!-- 调用Statment.setFetchSize方法设置JDBC的statment读取数据的时候每次从数据库中取出的记录条数,Oracle驱动默认10，Mysql不支持 -->
+        <property name="hibernate.jdbc.fetch_size">100</property>
+
+        <!-- 设定对数据库进行批量删除，批量更新和插入的时候的批次大小，类似于设置缓冲区大小的意思，越大批量操作时想数据库发送的SQL的次数越多，速度就越快 Oracle设置成30比较合适 -->
+        <property name="hibernate.jdbc.batch_size">30</property>
+
+        <!-- 启用二级缓存 -->
+        <property name="cache.use_second_level_cache">true</property>
+        <!-- 配置使用的二级缓存的产品 -->
+        <property name="hibernate.cache.region.factory_class">org.hibernate.cache.ehcache.EhCacheRegionFactory</property>
+        <!-- 配置启用查询缓存 -->
+        <property name="cache.use_query_cache">true</property>
+
+        <!-- 配置管理Session的方式 -->
+        <property name="current_session_context_class">thread</property>
+
+        <!-- 6.指定关联的 hbm.xml 文件 -->
+        <mapping resource="per/xgt/pojo/Employee.hbm.xml" />
+        <mapping resource="per/xgt/pojo/Department.hbm.xml" />
+
+        <!--<class-cache class="per.xgt.pojo.Employee" usage="read-write" />-->
+
+        <class-cache class="per.xgt.pojo.Department" usage="read-write" />
+        <collection-cache collection="per.xgt.pojo.Department.emps" usage="read-write" />
+
+    </session-factory>
+
+</hibernate-configuration>
